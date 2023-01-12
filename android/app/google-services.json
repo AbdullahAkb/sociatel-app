@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "539696235559",
+    "project_id": "exd-social-app-d0d1c",
+    "storage_bucket": "exd-social-app-d0d1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539696235559:android:9e59714d813712493a3a02",
+        "android_client_info": {
+          "package_name": "com.example.exd_social_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539696235559-ptaf6belbv4ttdckspmrrthu6l4bo3oe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIQF1Lis7u_W73LhyqhnfEh3cDsp6f8KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539696235559-ptaf6belbv4ttdckspmrrthu6l4bo3oe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
