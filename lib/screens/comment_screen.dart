@@ -23,8 +23,6 @@ class _CommentScreenState extends State<CommentScreen> {
   TextEditingController commentController = TextEditingController();
 
   addCommentToFirestore() async {
-    CollectionReference ref = FirestoreDb.commentreference;
-
     CommentModel data = CommentModel.withoutId(
         uid: FirestoreDb.currentUser!.uid,
         commentText: commentController.text,
@@ -41,6 +39,8 @@ class _CommentScreenState extends State<CommentScreen> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        elevation: 3,
+        shadowColor: Color.fromARGB(255, 248, 101, 148),
         title: const Text('Comments'),
         actions: [
           IconButton(
@@ -53,7 +53,7 @@ class _CommentScreenState extends State<CommentScreen> {
         ],
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
+        SizedBox(
           height: height * 0.4,
           width: width,
           child: ClipRRect(

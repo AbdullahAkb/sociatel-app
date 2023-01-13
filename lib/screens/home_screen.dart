@@ -172,11 +172,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             appBar: AppBar(
+              elevation: 3,
+              shadowColor: Color.fromARGB(255, 248, 101, 148),
               automaticallyImplyLeading: false,
               systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarIconBrightness: Brightness.dark,
                   statusBarColor: Colors.white),
-              elevation: 0,
+
               backgroundColor: Colors.white,
               // centerTitle: true,
               leading: IconButton(
@@ -217,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: EdgeInsets.only(
                           left: width * 0.02,
                           right: width * 0.02,
-                          top: height * 0.009),
+                          top: height * 0.03),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -442,7 +444,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     InkWell(
-                                      
                                       child: Container(
                                         child: Row(
                                           mainAxisAlignment:

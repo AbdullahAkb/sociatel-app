@@ -7,11 +7,14 @@ import 'package:exd_social_app/screens/comment_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final UserModel details;
   const ProfileScreen({Key? key, required this.details}) : super(key: key);
+
+  final UserModel details;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,8 +22,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   User? currentUser = FirebaseAuth.instance.currentUser;
-  List<PostModelNew> postList = [];
   bool likeState = true;
+  int likes = 0;
+  List<PostModelNew> postList = [];
 
   Stream<List<PostModelNew>> postOfUser() async* {
     QuerySnapshot postReference = await FirebaseFirestore.instance
@@ -54,10 +58,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       likeCountIncrement(id);
       setState(() {
         likeState = !likeState;
+        if (likes == 0) {
+          likes = likes + 1;
+        }
       });
     } else {
       likeCountdecrement(id);
+
       setState(() {
+        if (likes != 0) {
+          likes = likes - 1;
+        }
         likeState = !likeState;
       });
     }
@@ -69,33 +80,193 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.details.name),
+        // centerTitle: true,
+        title: Text(
+          "Profile",
+          style: TextStyle(fontFamily: "Josefin Sans", color: Colors.black),
+        ),
+        elevation: 3,
+        shadowColor: Color.fromARGB(255, 248, 101, 148),
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: Colors.white),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.black,
+            )),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(CupertinoIcons.paperplane, color: Colors.black))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: height * 0.067,
-              width: width * 0.14,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Image.network(
-                      widget.details.profileImage,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+            SizedBox(
+              height: height * 0.02,
             ),
-            Text(widget.details.email),
-            Text(widget.details.phone),
-            StreamBuilder(
+            Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: height * 0.1),
+                      padding: EdgeInsets.only(top: height * 0.05),
+                      height: height * 0.17,
+                      width: width * 0.9,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 212, 209, 209),
+                                offset: Offset(0, 1),
+                                blurRadius: 4,
+                                spreadRadius: 2)
+                          ]),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Name:",
+                                    style: TextStyle(
+                                        fontFamily: "Josefin Sans",
+                                        fontSize: 16,
+                                        color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  Text(
+                                    "Email:",
+                                    style: const TextStyle(
+                                        fontFamily: "Josefin Sans",
+                                        fontSize: 16,
+                                        color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  const Text(
+                                    "Phone #:",
+                                    style: TextStyle(
+                                        fontFamily: "Josefin Sans",
+                                        fontSize: 16,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.details.name,
+                                    style: TextStyle(
+                                      fontFamily: "Josefin Sans",
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 248, 101, 148),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  Text(
+                                    widget.details.email,
+                                    style: TextStyle(
+                                      fontFamily: "Josefin Sans",
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 248, 101, 148),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  Text(
+                                    widget.details.phone,
+                                    style: TextStyle(
+                                      fontFamily: "Josefin Sans",
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 248, 101, 148),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly
+                  children: [
+                    SizedBox(
+                      width: width * 0.23,
+                    ),
+                    Container(
+                      height: height * 0.135,
+                      width: width * 0.3,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 251, 194, 212),
+                                offset: Offset(0, 1),
+                                blurRadius: 4,
+                                spreadRadius: 2)
+                          ]),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                        child: Image.network(
+                          widget.details.profileImage,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin:
+                      EdgeInsets.only(left: width * 0.8, top: height * 0.09),
+                  child: IconButton(
+                      splashColor: Colors.white,
+                      onPressed: () {},
+                      icon: Icon(
+                        CupertinoIcons.pencil_outline,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      )),
+                )
+              ],
+            ),
+            SizedBox(
+              height: height * 0.04,
+            ),
+            StreamBuilder<List<PostModelNew>>(
               stream: postOfUser(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CupertinoActivityIndicator());
-                } else if (snapshot.connectionState == ConnectionState.done) {
+                } else if (snapshot.hasData) {
                   return ListView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
@@ -204,7 +375,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    " ${snapshot.data![index].likesCount.toString()} likes",
+                                    " ${likes.toString()} likes",
                                     style:
                                         TextStyle(fontFamily: "Josefin Sans"),
                                   ),
@@ -261,7 +432,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       Get.to(CommentScreen(
                                         details: details,
                                         userDetails: widget.details,
-
                                       ));
                                     },
                                     child: Container(

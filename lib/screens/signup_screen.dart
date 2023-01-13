@@ -3,6 +3,7 @@ import 'package:exd_social_app/auth/firebase_auth.dart';
 import 'package:exd_social_app/controllers/image_picker_controller.dart';
 import 'package:exd_social_app/controllers/signup_controller.dart';
 import 'package:exd_social_app/models/user_model.dart';
+import 'package:exd_social_app/screens/signin_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,15 +22,17 @@ class SignupScreen extends StatelessWidget {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
+            title: Text("SignUp"),
             actions: [
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(SigninScreen());
+                  },
                   child: Text(
-                    "upload",
+                    "Login",
                     style: TextStyle(color: Colors.white),
-                  )),
+                  ))
             ],
-            title: Text("SignUp"),
           ),
           body: Form(
             key: _formKey,
@@ -129,8 +132,8 @@ class SignupScreen extends StatelessWidget {
                 TextButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await _.onSignUp();
-                        await _.uploadImageToStorage();
+                        _.onSignUp();
+                        _.uploadImageToStorage();
                         Get.snackbar("Signed-Up", "Successfully");
                       }
                     },

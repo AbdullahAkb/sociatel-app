@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:image/image.dart' as img;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exd_social_app/auth/firebase_auth.dart';
 import 'package:exd_social_app/screens/post_screen.dart';
+import 'package:exd_social_app/screens/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,21 +12,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SignupController extends GetxController {
+  CroppedFile? croppedFile;
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneNumbController = TextEditingController();
-
   String hintEmail = "abdullahakb111@gmail.com";
-  String hintPass = "********";
   String hintName = "Abdullah";
+  String hintPass = "********";
   String hintPhone = "03018677420";
+  File? imageFile;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneNumbController = TextEditingController();
+  CroppedFile? profileCroppedFile;
+  File? profile_imageFile;
   RxBool secure = true.obs;
   bool status = false;
-  File? imageFile;
-  File? profile_imageFile;
-  CroppedFile? croppedFile;
-  CroppedFile? profileCroppedFile;
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -74,7 +74,7 @@ class SignupController extends GetxController {
     );
 
     status
-        ? Get.to(() => PostScreen())
+        ? Get.to(() => SigninScreen())
         : printError(info: "Error", logFunction: () {});
   }
 
@@ -86,7 +86,7 @@ class SignupController extends GetxController {
     final ImagePicker picker = ImagePicker();
 // Pick an image
     final XFile? profileimage =
-        await picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
 
     profileCroppedFile = await ImageCropper()
         .cropImage(sourcePath: profileimage!.path, aspectRatioPresets: [
@@ -117,6 +117,7 @@ class SignupController extends GetxController {
     File filePath = File(profile_imageFile!.path);
     try {
       print("Abdullah");
+
       firebase_storage.UploadTask? uploadFile;
       firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
           .ref()

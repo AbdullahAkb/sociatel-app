@@ -79,7 +79,6 @@ class Auth {
   static Future<bool> signOut() async {
     bool status = false;
     try {
-      
       await FirebaseAuth.instance.signOut();
       status = true;
     } catch (e) {}
