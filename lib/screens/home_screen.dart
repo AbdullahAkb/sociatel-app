@@ -3,6 +3,7 @@ import 'package:exd_social_app/auth/firebase_auth.dart';
 import 'package:exd_social_app/controllers/home_screen_controller.dart';
 import 'package:exd_social_app/models/post_model.dart';
 import 'package:exd_social_app/models/user_model.dart';
+import 'package:exd_social_app/screens/chat_screen.dart';
 import 'package:exd_social_app/screens/comment_screen.dart';
 import 'package:exd_social_app/screens/post_screen.dart';
 import 'package:exd_social_app/screens/profile_screen.dart';
@@ -172,8 +173,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             appBar: AppBar(
-              elevation: 3,
-              shadowColor: Color.fromARGB(255, 248, 101, 148),
+              elevation: 0,
+              // shadowColor: Color.fromARGB(255, 248, 101, 148),
               automaticallyImplyLeading: false,
               systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarIconBrightness: Brightness.dark,
@@ -204,7 +205,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(ChatScreen(),
+                          transition: Transition.rightToLeftWithFade);
+                    },
                     icon: Icon(
                       CupertinoIcons.paperplane,
                       color: Color.fromARGB(255, 36, 55, 72),
@@ -231,9 +235,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     BorderRadius.all(Radius.circular(40)),
                                 child: InkWell(
                                   onTap: () {
-                                    Get.to(ProfileScreen(
-                                      details: data,
-                                    ));
+                                    Get.to(
+                                        ProfileScreen(
+                                          details: data,
+                                        ),
+                                        transition:
+                                            Transition.rightToLeftWithFade);
                                   },
                                   child: Image.network(
                                     data.profileImage,

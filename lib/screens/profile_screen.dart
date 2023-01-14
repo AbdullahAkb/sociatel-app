@@ -79,14 +79,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         // centerTitle: true,
         title: Text(
           "Profile",
-          style: TextStyle(fontFamily: "Josefin Sans", color: Colors.black),
+          style: TextStyle(
+              fontFamily: "Josefin Sans",
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold),
         ),
-        elevation: 3,
-        shadowColor: Color.fromARGB(255, 248, 101, 148),
+        elevation: 0,
+
         automaticallyImplyLeading: false,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.dark,
@@ -132,9 +137,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                                color: Color.fromARGB(255, 212, 209, 209),
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
+                                color: Color.fromARGB(255, 217, 217, 217),
+                                offset: Offset(0, 2),
+                                blurRadius: 2,
                                 spreadRadius: 2)
                           ]),
                       child: Column(
@@ -230,9 +235,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                           boxShadow: [
                             BoxShadow(
-                                color: Color.fromARGB(255, 251, 194, 212),
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
+                                color: Color.fromARGB(255, 210, 210, 210),
+                                offset: Offset(0, 3),
+                                blurRadius: 2,
                                 spreadRadius: 2)
                           ]),
                       child: ClipRRect(
@@ -429,10 +434,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Get.to(CommentScreen(
-                                        details: details,
-                                        userDetails: widget.details,
-                                      ));
+                                      Get.to(
+                                          CommentScreen(
+                                            details: details,
+                                            userDetails: widget.details,
+                                          ),
+                                          transition:
+                                              Transition.rightToLeftWithFade);
                                     },
                                     child: Container(
                                       child: Row(

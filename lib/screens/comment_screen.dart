@@ -5,6 +5,7 @@ import 'package:exd_social_app/models/post_model.dart';
 import 'package:exd_social_app/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CommentScreen extends StatefulWidget {
@@ -38,36 +39,84 @@ class _CommentScreenState extends State<CommentScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 3,
-        shadowColor: Color.fromARGB(255, 248, 101, 148),
-        title: const Text('Comments'),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await addCommentToFirestore();
-                Get.back();
-              },
-              icon: Icon(CupertinoIcons.paperplane,
-                  color: Color.fromARGB(255, 36, 55, 72)))
-        ],
-      ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SizedBox(
-          height: height * 0.4,
-          width: width,
-          child: ClipRRect(
-            child: Image.network(
-              widget.userDetails.profileImage,
-              fit: BoxFit.fitWidth,
-            ),
-          ),
+        // centerTitle: true,
+        title: Text(
+          "Comments",
+          style: TextStyle(
+              fontFamily: "Josefin Sans",
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold),
         ),
-        Text(widget.userDetails.name),
-        Text(widget.userDetails.email),
-        TextFormField(
-          controller: commentController,
-          decoration: InputDecoration(),
+        elevation: 0,
+
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: Colors.white),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.black,
+            )),
+      ),
+      body: Stack(children: [
+        Container(
+          margin: EdgeInsets.only(bottom: height * 0.015),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ListTile(
+                leading: SizedBox(
+                  height: height * 0.057,
+                  width: width * 0.125,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                    child: Image.network(
+                      widget.userDetails.profileImage,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ),
+                title: SizedBox(
+                  height: height * 0.06,
+                  child: TextFormField(
+                    controller: commentController,
+                    cursorColor: Color.fromARGB(255, 248, 101, 148),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 255, 202, 166),
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(40))),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 248, 101, 148),
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(40))),
+                      hintText: "Write Something!",
+                      hintStyle: TextStyle(
+                          fontFamily: "Josefin Sans", color: Colors.grey),
+                    ),
+                  ),
+                ),
+                trailing: IconButton(
+                    onPressed: () {
+                      addCommentToFirestore();
+                    },
+                    icon: Icon(
+                      Icons.send_rounded,
+                      color: Color.fromARGB(255, 248, 101, 148),
+                    )),
+              ),
+            ],
+          ),
         ),
       ]),
     );
