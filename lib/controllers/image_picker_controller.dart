@@ -95,7 +95,7 @@ class ImagePickerController extends GetxController {
         DocumentReference userRef = Auth.userReference.doc(user!.uid);
         userRef.update({"coverImage": url});
       });
-    // ignore: empty_catches
+      // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -104,7 +104,6 @@ class ImagePickerController extends GetxController {
 
     File filePath = File(profile_imageFile!.path);
     try {
-      
       print("Abdullah");
       firebase_storage.UploadTask? uploadFile;
       firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
@@ -118,7 +117,7 @@ class ImagePickerController extends GetxController {
         String url = await ref.getDownloadURL();
         print(url);
         User? user = FirebaseAuth.instance.currentUser;
-        
+
         String uid;
         if (user != null) {
           uid = user.uid;
@@ -127,7 +126,7 @@ class ImagePickerController extends GetxController {
         DocumentReference userRef = Auth.userReference.doc(user!.uid);
         userRef.set({"profileImage": url});
       });
-    // ignore: empty_catches
+      // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -193,7 +192,8 @@ class ImagePickerController extends GetxController {
   imagePickerForPostFromGallery() async {
     final ImagePicker picker = ImagePicker();
     // Pick an image
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
     croppedPostImage = await ImageCropper()
         .cropImage(sourcePath: image!.path, aspectRatioPresets: [
       CropAspectRatioPreset.square,
@@ -237,7 +237,8 @@ class ImagePickerController extends GetxController {
   imagePickerForPostFromCamera() async {
     final ImagePicker picker = ImagePicker();
     // Pick an image
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
     croppedPostImage = await ImageCropper()
         .cropImage(sourcePath: image!.path, aspectRatioPresets: [
       CropAspectRatioPreset.square,

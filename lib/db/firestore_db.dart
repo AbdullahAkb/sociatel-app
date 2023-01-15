@@ -8,6 +8,10 @@ class FirestoreDb {
       FirebaseFirestore.instance.collection("post");
   static CollectionReference commentreference =
       FirebaseFirestore.instance.collection("comment");
+  static CollectionReference messagesreference =
+      FirebaseFirestore.instance.collection("messages");
+  static CollectionReference messagereference =
+      FirebaseFirestore.instance.collection("message");
 
   static User? currentUser = FirebaseAuth.instance.currentUser;
 }

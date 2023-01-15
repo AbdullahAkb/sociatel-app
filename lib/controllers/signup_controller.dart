@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:image/image.dart' as img;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exd_social_app/auth/firebase_auth.dart';
 import 'package:exd_social_app/screens/post_screen.dart';
