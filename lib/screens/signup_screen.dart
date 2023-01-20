@@ -281,7 +281,7 @@ class SignupScreen extends StatelessWidget {
                                     onTap: () async {
                                       if (_formKey.currentState!.validate()) {
                                         _.onSignUp();
-                                        _.uploadImageToStorage();
+                                        // _.uploadImageToStorage();
                                         Get.snackbar(
                                             backgroundGradient: LinearGradient(
                                               colors: [

@@ -291,7 +291,7 @@ class ImagePickerController extends GetxController {
         likesCount: 0,
         uid: currentUser!.uid,
         postText: postTextController.text,
-        userImage: userdata.profileImage,
+        userImage: userdata.metaData.imageUrl,
         postImage: postImageUrl.toString(),
         dateTime: DateTime.now().toUtc().toString(),
         commentsCount: 0);

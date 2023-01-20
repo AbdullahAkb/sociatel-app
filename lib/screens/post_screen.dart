@@ -180,7 +180,7 @@ class _PostScreenState extends State<PostScreen> with TickerProviderStateMixin {
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                             child: Image.network(
-                              detail.profileImage,
+                              detail.metaData.imageUrl,
                               fit: BoxFit.cover,
                             ),
                           ),

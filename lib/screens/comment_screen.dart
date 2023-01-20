@@ -27,7 +27,7 @@ class _CommentScreenState extends State<CommentScreen> {
     CommentModel data = CommentModel.withoutId(
         uid: FirestoreDb.currentUser!.uid,
         commentText: commentController.text,
-        userImage: widget.userDetails.profileImage,
+        userImage: widget.userDetails.metaData.imageUrl,
         userName: widget.userDetails.name,
         dateTime: DateTime.now().toUtc().toString(),
         postId: widget.details.id);
@@ -79,7 +79,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(100)),
                     child: Image.network(
-                      widget.userDetails.profileImage,
+                      widget.userDetails.metaData.imageUrl,
                       fit: BoxFit.fitWidth,
                     ),
                   ),

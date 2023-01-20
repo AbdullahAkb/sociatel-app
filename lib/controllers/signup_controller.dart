@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exd_social_app/auth/firebase_auth.dart';
+import 'package:exd_social_app/screens/chats/login.dart';
 import 'package:exd_social_app/screens/post_screen.dart';
 import 'package:exd_social_app/screens/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +26,8 @@ class SignupController extends GetxController {
   File? profile_imageFile;
   RxBool secure = true.obs;
   bool status = false;
+
+  String? imageUrl;
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -70,6 +73,7 @@ class SignupController extends GetxController {
       password: passwordController.text,
       name: nameController.text,
       phoneNumb: phoneNumbController.text,
+      imageUrl: imageUrl!,
     );
 
     status
@@ -105,6 +109,7 @@ class SignupController extends GetxController {
 
     if (profileCroppedFile != null) {
       profile_imageFile = File(profileCroppedFile!.path);
+      uploadImageToStorage();
 
       update();
     }
@@ -127,15 +132,8 @@ class SignupController extends GetxController {
 
       Future.value(uploadFile).then((value) async {
         String url = await ref.getDownloadURL();
-        print(url);
-        User? user = FirebaseAuth.instance.currentUser;
-        String uid;
-        if (user != null) {
-          uid = user.uid;
-        }
-
-        DocumentReference userRef = Auth.userReference.doc(user!.uid);
-        userRef.update({"profileImage": url});
+        imageUrl = url;
+        update();
       });
     } catch (e) {}
   }

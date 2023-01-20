@@ -1,45 +1,69 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  late String name;
-  late String phone;
-  late String email;
-  late String profileImage;
-  late String coverImage;
-  late String uid;
+  UserModel({
+    required this.name,
+    required this.imageUrl,
+    required this.metaData,
+  });
+
+  UserModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    name = documentSnapshot["firstName"] ?? ' ';
+    imageUrl = documentSnapshot["imageUrl"] ?? ' ';
+    metaData = MetaData.fromjson(documentSnapshot["metadata"]);
+  }
 
   UserModel.fromjson(
     Map<String, dynamic> data,
   ) {
-    name = data["name"] ?? "";
-    phone = data["phone"] ?? "";
-    profileImage = data["profileImage"] ?? "";
-    // coverImage = data["coverImage"] ?? "";
-    uid = data["uid"];
-    email = data["email"] ?? "ABullah";
+    name = data["firstName"] ?? " ";
+    imageUrl = data["imageUrl"] ?? " ";
+
+    metaData = MetaData.fromjson(data["metadata"]);
   }
 
-  UserModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
-    name = documentSnapshot["name"] ?? ' ';
-    phone = documentSnapshot["phone"] ?? ' ';
-    profileImage = documentSnapshot["profileImage"] ?? "";
-    // coverImage = documentSnapshot["coverImage"] ?? " ";
-    uid = documentSnapshot["uid"];
-    email = documentSnapshot["email"] ?? "ABullah";
-  }
+  late MetaData metaData;
+  late String name;
+  late String imageUrl;
 
   Map<String, dynamic> tojson() {
     final _data = <String, dynamic>{};
-    _data["name"] = name;
-    _data["phone"] = phone;
-    _data["uid"] = uid;
-    _data["email"] = email;
+    _data["firstName"] = name;
+    _data["imageUrl"] = imageUrl;
+    _data["metadata"] = metaData.toJson();
     return _data;
   }
+}
 
-  UserModel(
-      {required this.name,
-      required this.email,
-      required this.phone,
-      required this.uid});
+class MetaData {
+  MetaData({
+    required this.email,
+    required this.phone,
+  });
+
+  MetaData.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    email = documentSnapshot["email"] ?? ' ';
+    phone = documentSnapshot["phone"] ?? ' ';
+    imageUrl = documentSnapshot["imageUrl"] ?? ' ';
+  }
+
+  MetaData.fromjson(
+    Map<String, dynamic> data,
+  ) {
+    email = data["email"] ?? "";
+    phone = data["phone"] ?? "";
+    imageUrl = data["imageUrl"] ?? " ";
+  }
+
+  late String email;
+  late String imageUrl;
+  late String phone;
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data["email"] = email;
+    _data["phone"] = phone;
+    _data["imageUrl"] = imageUrl;
+    return _data;
+  }
 }

@@ -21,6 +21,8 @@ class _LocationScreenState extends State<LocationScreen> {
 
   String address = "";
 
+  bool status = true;
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -31,6 +33,13 @@ class _LocationScreenState extends State<LocationScreen> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
+      Get.snackbar("Failed", "Please turn on your Location",
+          backgroundGradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 248, 101, 148),
+              Color.fromARGB(255, 255, 202, 166),
+            ],
+          ));
       return Future.error('Location services are disabled.');
     }
 
@@ -61,12 +70,14 @@ class _LocationScreenState extends State<LocationScreen> {
 
   getLatLong() {
     print("print");
+    status = false;
     Future<Position> data = _determinePosition();
     data.then((value) {
       print("value $value");
       setState(() {
         lat = value.latitude;
         long = value.longitude;
+        status = true;
       });
 
       getAddress(value.latitude, value.longitude);
@@ -193,25 +204,29 @@ class _LocationScreenState extends State<LocationScreen> {
               ),
             ],
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: width * 0.05,
-                ),
-                Container(
-                  child: Text(
-                    address,
-                    style: TextStyle(
-                        fontFamily: "Josefin Sans",
-                        fontSize: 17,
-                        color: Color.fromARGB(255, 248, 101, 148)),
+          status
+              ? Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: width * 0.05,
+                      ),
+                      Container(
+                        child: Text(
+                          address,
+                          style: TextStyle(
+                              fontFamily: "Josefin Sans",
+                              fontSize: 17,
+                              color: Color.fromARGB(255, 248, 101, 148)),
+                        ),
+                      ),
+                    ],
                   ),
+                )
+              : Center(
+                  child: CupertinoActivityIndicator(),
                 ),
-              ],
-            ),
-          ),
           SizedBox(
             height: height * 0.03,
           ),

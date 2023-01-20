@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class Auth {
   static CollectionReference userReference =
@@ -38,6 +40,7 @@ class Auth {
     required String password,
     required String name,
     required String phoneNumb,
+    required String imageUrl,
   }) async {
     bool status = false;
     try {
@@ -46,22 +49,34 @@ class Auth {
         email: email,
         password: password,
       );
+      Map<String, dynamic> userProfileData = {
+        "phone": phoneNumb,
+        "email": email,
+        "imageUrl": imageUrl,
+      };
+      await FirebaseChatCore.instance.createUserInFirestore(
+        types.User(
+            firstName: name,
+            id: credential.user!.uid,
+            imageUrl: imageUrl,
+            metadata: userProfileData),
+      );
 
-      User? currentUser = credential.user;
-      if (currentUser != null) {
-        DocumentReference currentUserReference =
-            userReference.doc(currentUser.uid);
+      // User? currentUser = credential.user;
+      // if (currentUser != null) {
+      //   DocumentReference currentUserReference =
+      //       userReference.doc(currentUser.uid);
 
-        Map<String, dynamic> userProfileData = {
-          "phone": phoneNumb,
-          "name": name,
-          "email": email,
-          "uid": currentUser.uid,
-          "profileImage": ""
-        };
+      //   Map<String, dynamic> userProfileData = {
+      //     "phone": phoneNumb,
+      //     "name": name,
+      //     "email": email,
+      //     "uid": currentUser.uid,
+      //     "profileImage": ""
+      //   };
 
-        await currentUserReference.set(userProfileData);
-      }
+      //   await currentUserReference.set(userProfileData);
+      // }
 
       status = true;
     } on FirebaseAuthException catch (e) {

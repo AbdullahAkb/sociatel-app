@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     height: height * 0.01,
                                   ),
                                   Text(
-                                    widget.details.email,
+                                    widget.details.metaData.email,
                                     style: TextStyle(
                                       fontFamily: "Josefin Sans",
                                       fontSize: 16,
@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     height: height * 0.01,
                                   ),
                                   Text(
-                                    widget.details.phone,
+                                    widget.details.metaData.phone,
                                     style: TextStyle(
                                       fontFamily: "Josefin Sans",
                                       fontSize: 16,
@@ -243,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(100)),
                         child: Image.network(
-                          widget.details.profileImage,
+                          widget.details.metaData.imageUrl,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -361,6 +361,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               height: height * 0.01,
                             ),
+                            //Image check
                             Container(
                               height: height * 0.4,
                               width: width,

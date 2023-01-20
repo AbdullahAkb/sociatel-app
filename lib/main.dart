@@ -1,3 +1,5 @@
+import 'package:exd_social_app/screens/chatGPT_screen.dart';
+import 'package:exd_social_app/screens/chats/login.dart';
 import 'package:exd_social_app/screens/home_screen.dart';
 import 'package:exd_social_app/screens/post_screen.dart';
 import 'package:exd_social_app/screens/signin_screen.dart';

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreDb {
   static CollectionReference userReference =
-      FirebaseFirestore.instance.collection("user");
+      FirebaseFirestore.instance.collection("users");
   static CollectionReference postreference =
       FirebaseFirestore.instance.collection("post");
   static CollectionReference commentreference =
