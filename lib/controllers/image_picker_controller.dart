@@ -23,7 +23,7 @@ class ImagePickerController extends GetxController {
   User? currentUser = FirebaseAuth.instance.currentUser;
   File? imageFile;
   //
-  dynamic postImage;
+  File? postImage;
 
   String? postImageUrl;
   List<PostModelNew> postList = [];
@@ -213,10 +213,9 @@ class ImagePickerController extends GetxController {
       postImage = File(croppedPostImage!.path);
       update();
     }
-
-    String postImageName = DateTime.now().millisecondsSinceEpoch.toString();
-    File postfilePath = File(postImage!.path);
     try {
+      String postImageName = DateTime.now().millisecondsSinceEpoch.toString();
+      File postfilePath = File(postImage!.path);
       print("Abdullah");
       firebase_storage.UploadTask? uploadFile;
       firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
@@ -226,7 +225,7 @@ class ImagePickerController extends GetxController {
       uploadFile = ref.putFile(postfilePath);
       Future.value(uploadFile).then((value) async {
         postImageUrl = await ref.getDownloadURL();
-
+        update();
         print(postImageUrl);
       });
     } catch (e) {
@@ -258,7 +257,6 @@ class ImagePickerController extends GetxController {
       postImage = File(croppedPostImage!.path);
       update();
     }
-
     String postImageName = DateTime.now().millisecondsSinceEpoch.toString();
     File postfilePath = File(postImage!.path);
     try {
@@ -271,6 +269,7 @@ class ImagePickerController extends GetxController {
       uploadFile = ref.putFile(postfilePath);
       Future.value(uploadFile).then((value) async {
         postImageUrl = await ref.getDownloadURL();
+        update();
 
         print(postImageUrl);
       });
@@ -279,24 +278,27 @@ class ImagePickerController extends GetxController {
     }
   }
 
-  postToFirestore() async {
+  postToFirestore(UserModel user_data) async {
+    print("object");
     CollectionReference reference =
         FirebaseFirestore.instance.collection("post");
-    DocumentSnapshot userData =
-        await usersReference.doc(currentUser!.uid).get();
 
-    UserModel userdata = UserModel.fromDocumentSnapshot(userData);
-    // var date = DateFormat.d().dateOnly.toString();
+    // DocumentSnapshot userData =
+    //     await usersReference.doc(currentUser!.uid).get();
+
+    // UserModel data_User =
+    //     UserModel.fromjson(userData.data() as Map<String, dynamic>);
     PostModelNew data = PostModelNew.withoutId(
         likesCount: 0,
         uid: currentUser!.uid,
         postText: postTextController.text,
-        userImage: userdata.metaData.imageUrl,
+        userImage: user_data.metaData.imageUrl,
         postImage: postImageUrl.toString(),
-        dateTime: DateTime.now().toUtc().toString(),
+        dateTime: DateFormat.Hms().format(DateTime.now()),
         commentsCount: 0);
 
     await reference.add(data.toJson());
+    Get.back();
   }
 
   Future<List<PostModelNew>> postOfUser() async {

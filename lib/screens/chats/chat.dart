@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:exd_social_app/screens/chats/agora_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
             widget.room.name.toString(),
             style: TextStyle(
                 fontFamily: "Josefin Sans",
-                color: Colors.black,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 25,
                 fontWeight: FontWeight.bold),
           ),
@@ -60,7 +61,10 @@ class _ChatPageState extends State<ChatPage> {
                   color: Colors.black,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(AgoraScreen(room: widget.room),
+                      transition: Transition.cupertinoDialog);
+                },
                 icon: Icon(
                   CupertinoIcons.videocam_fill,
                   color: Colors.black,

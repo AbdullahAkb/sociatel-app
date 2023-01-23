@@ -371,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderSide: BorderSide(color: Colors.grey)),
                               ),
                               onTap: () {
-                                Get.to(PostScreen(),
+                                Get.to(PostScreen(details: data),
                                     transition: Transition.downToUp);
                               },
                             ),

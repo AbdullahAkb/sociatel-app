@@ -13,6 +13,12 @@
         "postreference",
         "Signin",
         "Signup",
-        "userdata"
-    ]
+        "userdata",
+        
+    ],
+    "editor.cursorBlinking":"expand",
+    "editor.cursorStyle": "line",
+    "editor.cursorWidth": 2
+    
+
 }

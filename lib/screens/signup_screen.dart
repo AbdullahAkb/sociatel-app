@@ -285,10 +285,8 @@ class SignupScreen extends StatelessWidget {
                                         Get.snackbar(
                                             backgroundGradient: LinearGradient(
                                               colors: [
-                                                Color.fromARGB(
-                                                    255, 248, 101, 148),
-                                                Color.fromARGB(
-                                                    255, 255, 202, 166),
+                                                Color(0xFFF86594),
+                                                Color(0xFFFFCAA6),
                                               ],
                                             ),
                                             "Signed-Up",

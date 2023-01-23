@@ -3,13 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   UserModel({
     required this.name,
-    required this.imageUrl,
     required this.metaData,
   });
 
   UserModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
     name = documentSnapshot["firstName"] ?? ' ';
-    imageUrl = documentSnapshot["imageUrl"] ?? ' ';
     metaData = MetaData.fromjson(documentSnapshot["metadata"]);
   }
 
@@ -17,19 +15,15 @@ class UserModel {
     Map<String, dynamic> data,
   ) {
     name = data["firstName"] ?? " ";
-    imageUrl = data["imageUrl"] ?? " ";
-
     metaData = MetaData.fromjson(data["metadata"]);
   }
 
   late MetaData metaData;
   late String name;
-  late String imageUrl;
 
   Map<String, dynamic> tojson() {
     final _data = <String, dynamic>{};
     _data["firstName"] = name;
-    _data["imageUrl"] = imageUrl;
     _data["metadata"] = metaData.toJson();
     return _data;
   }
@@ -39,6 +33,7 @@ class MetaData {
   MetaData({
     required this.email,
     required this.phone,
+    required this.imageUrl,
   });
 
   MetaData.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {

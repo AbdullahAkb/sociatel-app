@@ -13,7 +13,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 
 class PostScreen extends StatefulWidget {
-  const PostScreen({Key? key}) : super(key: key);
+  final UserModel details;
+  const PostScreen({Key? key, required this.details}) : super(key: key);
 
   @override
   State<PostScreen> createState() => _PostScreenState();
@@ -104,7 +105,7 @@ class _PostScreenState extends State<PostScreen> with TickerProviderStateMixin {
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: GradientText(
-              'Craete Post',
+              'Create Post',
               style: TextStyle(
                 fontSize: 25,
                 fontFamily: "Pacifico",
@@ -141,8 +142,8 @@ class _PostScreenState extends State<PostScreen> with TickerProviderStateMixin {
                               TextStyle(fontFamily: "Josefin Sans"),
                           titleStyle: TextStyle(fontFamily: "Josefin Sans"));
                     } else {
-                      await _.postToFirestore();
-                      Get.back();
+                      _.postToFirestore(widget.details);
+                      
                     }
                   },
                   child: Text(
@@ -164,91 +165,80 @@ class _PostScreenState extends State<PostScreen> with TickerProviderStateMixin {
               SizedBox(
                 height: height * 0.015,
               ),
-              FutureBuilder<UserModel>(
-                future: userData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    UserModel detail = snapshot.data!;
-                    return Row(
-                      children: [
-                        SizedBox(
-                          width: width * 0.05,
-                        ),
-                        Container(
-                          height: height * 0.067,
-                          width: width * 0.145,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                            child: Image.network(
-                              detail.metaData.imageUrl,
-                              fit: BoxFit.cover,
+              Row(
+                children: [
+                  SizedBox(
+                    width: width * 0.05,
+                  ),
+                  Container(
+                    height: height * 0.067,
+                    width: width * 0.145,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      child: Image.network(
+                        widget.details.metaData.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.04,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: height * 0.008,
+                      ),
+                      Text(
+                        widget.details.name,
+                        style: TextStyle(
+                            fontFamily: "Josefin Sans",
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: height * 0.008,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * 0.04,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Row(
                           children: [
                             SizedBox(
-                              height: height * 0.008,
+                              width: width * 0.01,
                             ),
-                            Text(
-                              detail.name,
-                              style: TextStyle(
-                                  fontFamily: "Josefin Sans",
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
+                            Icon(
+                              CupertinoIcons.globe,
+                              color: Colors.grey,
+                              size: 14,
                             ),
                             SizedBox(
-                              height: height * 0.008,
+                              width: width * 0.009,
                             ),
                             Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(7))),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: width * 0.01,
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.globe,
-                                    color: Colors.grey,
-                                    size: 14,
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.009,
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(top: height * 0.003),
-                                    child: Text(
-                                      "Public",
-                                      style: TextStyle(
-                                        fontFamily: "Josefin Sans",
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down_rounded,
-                                    color: Colors.grey,
-                                  )
-                                ],
+                              margin: EdgeInsets.only(top: height * 0.003),
+                              child: Text(
+                                "Public",
+                                style: TextStyle(
+                                  fontFamily: "Josefin Sans",
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
+                            Icon(
+                              Icons.arrow_drop_down_rounded,
+                              color: Colors.grey,
+                            )
                           ],
-                        )
-                      ],
-                    );
-                  }
-                  return Container();
-                },
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
               SizedBox(
                 height: height * 0.04,
