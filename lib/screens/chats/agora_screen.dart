@@ -26,7 +26,6 @@ class _AgoraScreenState extends State<AgoraScreen> {
         appId: "290112d2f3c24f1eade2a10b62278db6",
         channelName: widget.room.id,
         username: "user",
-
       ),
       // enabledPermission: [Permission.camera, Permission.microphone],
     );
@@ -43,14 +42,12 @@ class _AgoraScreenState extends State<AgoraScreen> {
         child: Stack(
           children: [
             AgoraVideoViewer(
-
               showAVState: true,
               client: client!,
               layoutType: Layout.floating,
               enableHostControls: true, // Add this to enable host controls
             ),
             AgoraVideoButtons(
-              
               autoHideButtonTime: 3,
               client: client!,
             ),
