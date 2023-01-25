@@ -1,3 +1,4 @@
+import 'package:agora_uikit/agora_uikit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exd_social_app/auth/firebase_auth.dart';
 import 'package:exd_social_app/controllers/home_screen_controller.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:app_settings/app_settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -70,209 +72,223 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.white,
             key: _scaffoldKey,
             drawer: Container(
-                // margin: EdgeInsets.only(top: height * 0.045),
-                decoration: BoxDecoration(
+              // margin: EdgeInsets.only(top: height * 0.045),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                topRight: Radius.circular(70),
+              )),
+              child: Drawer(
+                backgroundColor: Colors.white,
+                elevation: 40,
+                surfaceTintColor: Color.fromARGB(255, 248, 101, 148),
+                shadowColor: Color.fromARGB(255, 248, 101, 148),
+                shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(70),
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(30),
                 )),
-                child: FutureBuilder<UserModel>(
-                    future: userData(),
-                    builder: (context, snapshot) {
-                      return Drawer(
-                        backgroundColor: Colors.white,
-                        elevation: 40,
-                        surfaceTintColor: Color.fromARGB(255, 248, 101, 148),
-                        shadowColor: Color.fromARGB(255, 248, 101, 148),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(30),
-                        )),
-                        width: width * 0.7,
-                        child: Column(
-                          children: [
-                            UserAccountsDrawerHeader(
-                                margin: EdgeInsets.only(top: height * 0.04),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    Color.fromARGB(255, 248, 101, 148),
-                                    Color.fromARGB(255, 255, 202, 166),
+                width: width * 0.7,
+                child: Column(
+                  children: [
+                    UserAccountsDrawerHeader(
+                        margin: EdgeInsets.only(top: height * 0.04),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Color.fromARGB(255, 248, 101, 148),
+                            Color.fromARGB(255, 255, 202, 166),
 
-                                    // Color.fromARGB(255, 248, 101, 148),
-                                    // Color.fromARGB(255, 255, 202, 166),
-                                  ]),
-                                ),
-                                currentAccountPicture: Container(
-                                  child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50)),
-                                    child: Image.network(
-                                      data.metaData.imageUrl,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                accountName: Text(snapshot.data!.name,
-                                    style:
-                                        TextStyle(fontFamily: "Josefin Sans")),
-                                accountEmail: Text(
-                                  // "h",
-                                  snapshot.data!.metaData.email,
-                                  style: TextStyle(fontFamily: "Josefin Sans"),
-                                )),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
-                            ListTile(
-                              splashColor: Color.fromARGB(255, 255, 202, 166),
-                              onTap: () {
-                                Get.to(
-                                    ProfileScreen(
-                                      details: snapshot.data!,
-                                    ),
-                                    transition: Transition.rightToLeftWithFade);
-                              },
-                              leading: Icon(CupertinoIcons.person, size: 20),
-                              title: Text(
-                                "Profile",
-                                style: TextStyle(fontFamily: "Josefin Sans"),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Color.fromARGB(255, 248, 101, 148),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              indent: width * 0.1,
-                              endIndent: width * 0.1,
-                              color: Color.fromARGB(255, 255, 202, 166),
-                            ),
-                            ListTile(
-                              splashColor: Color.fromARGB(255, 255, 202, 166),
-                              onTap: () {},
-                              leading: Icon(CupertinoIcons.person_2, size: 20),
-                              title: Text(
-                                "Friends",
-                                style: TextStyle(fontFamily: "Josefin Sans"),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Color.fromARGB(255, 248, 101, 148),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              indent: width * 0.1,
-                              endIndent: width * 0.1,
-                              color: Color.fromARGB(255, 255, 202, 166),
-                            ),
-                            ListTile(
-                              splashColor: Color.fromARGB(255, 255, 202, 166),
-                              onTap: () {
-                                Get.to(RoomsPage(),
-                                    transition: Transition.rightToLeftWithFade);
-                              },
-                              leading: Icon(Icons.message_rounded, size: 20),
-                              title: Text(
-                                "Messages",
-                                style: TextStyle(fontFamily: "Josefin Sans"),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Color.fromARGB(255, 248, 101, 148),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              indent: width * 0.1,
-                              endIndent: width * 0.1,
-                              color: Color.fromARGB(255, 255, 202, 166),
-                            ),
-                            ListTile(
-                              splashColor: Color.fromARGB(255, 255, 202, 166),
-                              onTap: () {
-                                Get.to(LocationScreen(),
-                                    transition: Transition.rightToLeftWithFade);
-                              },
-                              leading: Icon(CupertinoIcons.location, size: 20),
-                              title: Text(
-                                "Location",
-                                style: TextStyle(fontFamily: "Josefin Sans"),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Color.fromARGB(255, 248, 101, 148),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              indent: width * 0.1,
-                              endIndent: width * 0.1,
-                              color: Color.fromARGB(255, 255, 202, 166),
-                            ),
-                            ListTile(
-                              splashColor: Color.fromARGB(255, 255, 202, 166),
-                              onTap: () {
-                                Get.to(ChatGPTScreen(),
-                                    transition: Transition.rightToLeftWithFade);
-                              },
-                              leading: Image.asset(
-                                "Assets/images/robot.png",
-                                height: height * 0.028,
-                              ),
-                              title: Text(
-                                "Chat Bot",
-                                style: TextStyle(fontFamily: "Josefin Sans"),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Color.fromARGB(255, 248, 101, 148),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              indent: width * 0.1,
-                              endIndent: width * 0.1,
-                              color: Color.fromARGB(255, 255, 202, 166),
-                            ),
-                            ListTile(
-                              splashColor: Color.fromARGB(255, 255, 202, 166),
-                              onTap: () async {
-                                bool status;
-                                status = await Auth.signOut();
-                                status
-                                    ? Get.to(SigninScreen(),
-                                        transition:
-                                            Transition.leftToRightWithFade)
-                                    : printError(info: "error");
-                              },
-                              title: Text(
-                                "LogOut",
-                                style: TextStyle(fontFamily: "Josefin Sans"),
-                              ),
-                              leading: Icon(Icons.output_rounded, size: 20),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Color.fromARGB(255, 248, 101, 148),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              indent: width * 0.1,
-                              endIndent: width * 0.1,
-                              color: Color.fromARGB(255, 255, 202, 166),
-                            ),
-                          ],
+                            // Color.fromARGB(255, 248, 101, 148),
+                            // Color.fromARGB(255, 255, 202, 166),
+                          ]),
                         ),
-                      );
-                    })),
+                        currentAccountPicture: Container(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            child: Image.network(
+                              data.metaData.imageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        accountName: Text(snapshot.data!.name,
+                            style: TextStyle(fontFamily: "Josefin Sans")),
+                        accountEmail: Text(
+                          // "h",
+                          snapshot.data!.metaData.email,
+                          style: TextStyle(fontFamily: "Josefin Sans"),
+                        )),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () {
+                        Get.to(
+                            ProfileScreen(
+                              details: snapshot.data!,
+                            ),
+                            transition: Transition.rightToLeftWithFade);
+                      },
+                      leading: Icon(CupertinoIcons.person, size: 20),
+                      title: Text(
+                        "Profile",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      indent: width * 0.1,
+                      endIndent: width * 0.1,
+                      color: Color.fromARGB(255, 255, 202, 166),
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () {},
+                      leading: Icon(CupertinoIcons.person_2, size: 20),
+                      title: Text(
+                        "Friends",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      indent: width * 0.1,
+                      endIndent: width * 0.1,
+                      color: Color.fromARGB(255, 255, 202, 166),
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () {
+                        Get.to(RoomsPage(),
+                            transition: Transition.rightToLeftWithFade);
+                      },
+                      leading: Icon(Icons.message_rounded, size: 20),
+                      title: Text(
+                        "Messages",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      indent: width * 0.1,
+                      endIndent: width * 0.1,
+                      color: Color.fromARGB(255, 255, 202, 166),
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () {
+                        Get.to(LocationScreen(),
+                            transition: Transition.rightToLeftWithFade);
+                      },
+                      leading: Icon(CupertinoIcons.location, size: 20),
+                      title: Text(
+                        "Location",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      indent: width * 0.1,
+                      endIndent: width * 0.1,
+                      color: Color.fromARGB(255, 255, 202, 166),
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () {
+                        Get.to(ChatGPTScreen(),
+                            transition: Transition.rightToLeftWithFade);
+                      },
+                      leading: Image.asset(
+                        "Assets/images/robot.png",
+                        height: height * 0.028,
+                      ),
+                      title: Text(
+                        "Chat Bot",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      indent: width * 0.1,
+                      endIndent: width * 0.1,
+                      color: Color.fromARGB(255, 255, 202, 166),
+                    ),
+                    Expanded(
+                      child: Container(),
+                      flex: 1,
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () async {
+                        bool status;
+                        status = await Auth.signOut();
+                        status
+                            ? Get.to(SigninScreen(),
+                                transition: Transition.leftToRightWithFade)
+                            : printError(info: "error");
+                      },
+                      title: Text(
+                        "LogOut",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      leading: Icon(Icons.output_rounded, size: 20),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      indent: width * 0.1,
+                      endIndent: width * 0.1,
+                      color: Color.fromARGB(255, 255, 202, 166),
+                    ),
+                    ListTile(
+                      splashColor: Color.fromARGB(255, 255, 202, 166),
+                      onTap: () {
+                        AppSettings.openAppSettings();
+                      },
+                      leading: Icon(CupertinoIcons.settings, size: 20),
+                      title: Text(
+                        "App Settings",
+                        style: TextStyle(fontFamily: "Josefin Sans"),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: Color.fromARGB(255, 248, 101, 148),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             appBar: AppBar(
               elevation: 0,
               // shadowColor: Color.fromARGB(255, 248, 101, 148),

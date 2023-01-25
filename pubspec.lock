@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.2"
+  app_settings:
+    dependency: "direct main"
+    description:
+      name: app_settings
+      sha256: "66715a323ac36d6c8201035ba678777c0d2ea869e4d7064300d95af10c3bb8cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
   archive:
     dependency: transitive
     description:
@@ -378,6 +386,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+19"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      sha256: dc010a6436333029fba858415fe65887c3fe44d8f6e6ea162bb8d3dd764fbcb6
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.2.1"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      sha256: abda2d766486096eb1c568c7b20aef46180596c8b0708190b929133ff03e0a8d
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.10"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      sha256: "7a0ce957bd2210e8636325152234728874dad039f1c7271ba1be5c752fdc5888"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.11"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -1248,4 +1280,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=3.0.0-76.0.dev <4.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.0.1"
