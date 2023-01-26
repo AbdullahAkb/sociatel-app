@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:exd_social_app/screens/chats/agora_screen.dart';
 import 'package:file_picker/file_picker.dart';
@@ -29,6 +30,40 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   bool _isAttachmentUploading = false;
+
+  String authKey =
+      "key=AAAAfahnBCc:APA91bHTlgCgNtUQQF4Rcy9ODRW0TLxW2RuYdHUDfy7JjwpF7FUnzJY_vS1R2AjanwYbxbGo5tWUMWfxQKDJD1ZjWTScnwMSwsVcPljOvTHwh6xk1Q2o0bRV22DXSchFD4kfVJN7kRPY";
+
+  String token =
+      "fqDEOHmARh6j0x4ouIroa7:APA91bHNnLTKThB-wT7NCWtsXNcQ_pGPjrKDU_RtVUSNJ3Qcs4HUJqvQfqLBzoh9DeTW7rn5MR_-YhMm7tVQoz5O0iWf7kPvHLZg7uh3j_u1B6xOgrI6qZe7uCHMLQayUXHt0GDYzNK8";
+
+  String aliToken =
+      "cII7Bix1T7-flvjIbwmDDf:APA91bERvTq_DIpJBvehZPsY_PAeA5UUwNOh4ZgyOwp0uN-eJI56erwzrnrsiXiFnkt6GwJ2VAlQuGCvXdD-NyqOGll30Kz_jGWLYCra3kyaEpDsFcPOjOUucSOmMyWRPwke83E85tpm";
+  Future<void> messageNotification() async {
+    Uri uri = Uri.parse("https://fcm.googleapis.com/fcm/send");
+
+    Map<String, dynamic> body = {
+      "to": aliToken,
+      "notification": {
+        "title": widget.room.name.toString().capitalizeFirst,
+        "body": "New Notification"
+      },
+      "data": <String, dynamic>{
+        "room": widget.room,
+        "title": "Title of Your Notification",
+        "isNotify": 0
+      }
+    };
+
+    http.Response response = await http.post(uri,
+        body: jsonEncode(body),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+          "Authorization": authKey
+        });
+
+    print(response.statusCode);
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -250,7 +285,8 @@ class _ChatPageState extends State<ChatPage> {
     FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id);
   }
 
-  void _handleSendPressed(types.PartialText message) {
+  void _handleSendPressed(types.PartialText message) async {
+    await messageNotification();
     FirebaseChatCore.instance.sendMessage(
       message,
       widget.room.id,

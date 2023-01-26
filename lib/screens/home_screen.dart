@@ -8,6 +8,7 @@ import 'package:exd_social_app/screens/chatGPT_screen.dart';
 import 'package:exd_social_app/screens/chats/login.dart';
 import 'package:exd_social_app/screens/chats/rooms.dart';
 import 'package:exd_social_app/screens/location_screen.dart';
+import 'package:exd_social_app/screens/notificationScreen.dart';
 import 'package:exd_social_app/screens/signin_screen.dart';
 import 'package:exd_social_app/screens/userChats_screen.dart';
 import 'package:exd_social_app/screens/comment_screen.dart';
@@ -148,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     ListTile(
                       splashColor: Color.fromARGB(255, 255, 202, 166),
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(NotificationScreen());
+                      },
                       leading: Icon(CupertinoIcons.person_2, size: 20),
                       title: Text(
                         "Friends",
