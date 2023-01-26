@@ -43,7 +43,7 @@ class _ChatPageState extends State<ChatPage> {
     Uri uri = Uri.parse("https://fcm.googleapis.com/fcm/send");
 
     Map<String, dynamic> body = {
-      "to": aliToken,
+      "to": token,
       "notification": {
         "title": widget.room.name.toString().capitalizeFirst,
         "body": "New Notification"

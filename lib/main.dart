@@ -65,9 +65,8 @@ class _MyAppState extends State<MyApp> {
       print('Message data: ${message.data}');
 
       if (message.notification != null) {
+        Map<String, dynamic> data = message.data;
         Get.snackbar(onTap: (snack) {
-          Map<String, dynamic> data = message.data;
-
           if (data["isNotify"] == 0) {
             Get.to(ChatPage(
               room: data["room"],
