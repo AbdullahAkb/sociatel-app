@@ -18,7 +18,15 @@
     ],
     "editor.cursorBlinking":"expand",
     "editor.cursorStyle": "line",
-    "editor.cursorWidth": 2
+    "editor.cursorWidth": 2,
+    "editor.fontFamily": "'Cartograph CF'",
+    "editor.fontVariations": true,
+    "editor.semanticTokenColorCustomizations": {
+        "enabled": true // enable for all themes
+    },
+    "editor.fontLigatures": true,
+    
+    
     
 
 }
