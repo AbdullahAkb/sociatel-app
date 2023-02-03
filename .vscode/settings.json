@@ -19,7 +19,7 @@
     "editor.cursorBlinking":"expand",
     "editor.cursorStyle": "line",
     "editor.cursorWidth": 2,
-    "editor.fontFamily": "'Cartograph CF'",
+    "editor.fontFamily": "'Cascadia Code'",
     "editor.fontVariations": true,
     "editor.semanticTokenColorCustomizations": {
         "enabled": true // enable for all themes
